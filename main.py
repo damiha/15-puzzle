@@ -1,7 +1,6 @@
-import time
 from tkinter import *
+from solvers import BFSSolver, DFSSolver, DepthLimitedDFSSolver, IterativeDFSSolver
 
-import solver
 import node
 import properties as prop
 
@@ -10,6 +9,8 @@ master.title(prop.WINDOW_TITLE)
 
 w = Canvas(master, width=prop.CANVAS_WIDTH, height=prop.CANVAS_HEIGHT)
 w.pack()
+
+goal_node = node.Node.create_goal_node()
 
 
 def draw(game_node):
@@ -65,8 +66,8 @@ start_node = node.Node.create_random_node(5)
 
 draw(start_node)
 
-solution = solver.dfs_depth_limited(start_node, 5)
-print(solution)
+solver = IterativeDFSSolver(start_node, goal_node)
+print(solver.solve())
 
 master.resizable(False, False)
 mainloop()

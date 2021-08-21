@@ -5,8 +5,8 @@ import sys
 
 class IterativeDFSSolver(Solver):
 
-    def __init__(self, start_node, goal_node):
-        super().__init__(start_node, goal_node)
+    def __init__(self):
+        super().__init__()
         self.solver = None
         self.depth_limit = 0
 
@@ -23,21 +23,19 @@ class IterativeDFSSolver(Solver):
         solution = []
 
         while True:
-
             self.set_solver()
             solution = self.solver.solve()
 
             self.update_stats()
 
-            just_starting = self.depth_limit == 0
-
-            if self.is_solution(solution) or just_starting:
+            if self.is_solution(solution):
                 return solution
 
             self.depth_limit += 1
 
     def set_solver(self):
-        self.solver = DepthLimitedDFSSolver(self.start_node, self.goal_node, self.depth_limit)
+        self.solver = DepthLimitedDFSSolver(self.depth_limit)
+        self.solver.load_context(self.start_node, self.goal_node)
 
         if self.stats is not None:
             self.solver.create_stats()

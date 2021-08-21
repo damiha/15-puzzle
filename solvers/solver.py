@@ -1,14 +1,19 @@
 from abc import ABC, abstractmethod
-
+from node import Node
 
 class Solver(ABC):
 
-    def __init__(self, start_node, goal_node):
+    def __init__(self):
+        self.seen = set()
+
+        self.start_node = Node.empty_node()
+        self.goal_node = Node.empty_node()
+        self.stats = None
+
+    # TODO: prevent NullPointerException
+    def load_context(self, start_node, goal_node):
         self.start_node = start_node
         self.goal_node = goal_node
-
-        self.seen = set()
-        self.stats = None
 
     @abstractmethod
     def create_stats(self):

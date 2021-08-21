@@ -10,7 +10,6 @@ class DFSSolver(Solver):
         return self.dfs(self.start_node, 0)
 
     def dfs(self, current_node, depth):
-
         self.update_stats()
 
         if self.limit_exceeded(depth):

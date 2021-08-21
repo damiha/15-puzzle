@@ -18,3 +18,13 @@ class Properties:
     CANVAS_BG_COLOR = "lightgrey"
     TEXT_COLOR = "darkblue"
     TEXT_FONT = "Times 20 bold"
+
+    SOLVER_OPTIONS = [
+        "breadth first search",
+        "depth first search",
+        "depth first search (limited)",
+        "depth first search (iterative)",
+    ]
+
+    DEFAULT_SOLVER = "breadth first search"
+    DEFAULT_DEPTH_LIMIT = 10

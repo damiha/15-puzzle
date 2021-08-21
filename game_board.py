@@ -16,6 +16,17 @@ class GameBoard:
         self.current_node = Node.create_goal_node()
         self.goal_node = Node.create_goal_node()
 
+        self.set_solver(prop.DEFAULT_SOLVER)
+
+    def set_solver(self, solver_name):
+        solvers_by_name = {
+                                "breadth first search": BFSSolver(),
+                                "depth first search": DFSSolver(),
+                                "depth first search (limited)": DepthLimitedDFSSolver(),
+                                "depth first search (iterative)": IterativeDFSSolver()
+        }
+        self.solver = solvers_by_name[solver_name]
+
     def shuffle_game_board(self):
         self.current_node = Node.create_random_node()
         self.shuffled_without_solution = True
@@ -23,8 +34,9 @@ class GameBoard:
     def solve(self):
 
         if self.shuffled_without_solution:
-            solver = BFSSolver(self.current_node, self.goal_node)
-            self.solution = solver.solve()
+            self.solver.load_context(self.current_node, self.goal_node)
+            self.solver.create_stats()
+            self.solution = self.solver.solve()
             self.move_pointer = -1
             self.shuffled_without_solution = False
 

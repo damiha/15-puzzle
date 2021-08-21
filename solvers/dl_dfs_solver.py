@@ -1,11 +1,12 @@
 from solvers import DFSSolver
 from statistics import Statistics
+from properties import Properties as prop
 
 
 class DepthLimitedDFSSolver(DFSSolver):
 
-    def __init__(self, start_node, goal_node, depth_limit):
-        super().__init__(start_node, goal_node)
+    def __init__(self, depth_limit=prop.DEFAULT_DEPTH_LIMIT):
+        super().__init__()
         self.depth_limit = depth_limit
 
     def limit_exceeded(self, depth):

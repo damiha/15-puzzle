@@ -104,6 +104,7 @@ class Node:
     @staticmethod
     def create_random_node():
 
+        goal_node = Node.create_goal_node()
         current_node = Node.create_goal_node()
 
         for i in range(0,prop.AMOUNT_SHUFFLES):
@@ -112,7 +113,11 @@ class Node:
 
         # cut parent relation so that get_solution() works
         current_node.parent = None
-        return current_node
+
+        if current_node != goal_node:
+            return current_node
+        else:
+            return Node.create_random_node()
 
     @staticmethod
     def create_goal_node():
@@ -136,6 +141,10 @@ class Node:
 
         goal_entries[gap_col_index][gap_row_index] = prop.CELL_EMPTY
         return Node.create_node_from_entries(goal_entries)
+
+    @staticmethod
+    def empty_node():
+        return Node(None, None, None)
 
     @staticmethod
     def print(node):

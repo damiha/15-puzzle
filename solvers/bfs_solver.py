@@ -2,10 +2,11 @@ from solvers import Solver
 from statistics import Statistics
 import sys
 
+
 class BFSSolver(Solver):
 
-    def __init__(self, start_node, goal_node):
-        super().__init__(start_node, goal_node)
+    def __init__(self):
+        super().__init__()
         self.queue = []
 
     def create_stats(self):

@@ -1,102 +1,72 @@
 import time
 from tkinter import *
-import random
+
+import solver
+import node
+import properties as prop
 
 master = Tk()
-master.title("15-Puzzle-Solver")
+master.title(prop.WINDOW_TITLE)
 
-canvas_width = 600
-canvas_height = 600
-cellsize = canvas_width / 4
-
-w = Canvas(master,
-           width=canvas_width,
-           height=canvas_height)
+w = Canvas(master, width=prop.CANVAS_WIDTH, height=prop.CANVAS_HEIGHT)
 w.pack()
 
-def draw_grid():
-    global cellsize
 
-    # vertical lines
-    for i in range(0, int(canvas_width / cellsize)):
-        w.create_line(i*cellsize, 0, i*cellsize, canvas_height)
-
-    # vertical lines
-    for i in range(0, int(canvas_height / cellsize)):
-        w.create_line(0,i * cellsize, canvas_width, i * cellsize)
+def draw(game_node):
+    draw_grid()
+    draw_entries(game_node.entries)
 
 
 def draw_entries(entries):
 
-    for i in range(0, len(entries)):
-        for j in range(0, len(entries[0])):
-            center_y = cellsize * (i + 0.5)
-            center_x = cellsize * (j + 0.5)
+    for i in range(0, prop.CELLS_PER_COLUMN):
+        for j in range(0, prop.CELLS_PER_ROW):
 
-            if(entries[i][j] != -1):
-                w.create_rectangle(j * cellsize, i * cellsize, (j + 1) * cellsize, (i + 1) *cellsize, fill="#fff")
-                w.create_text(center_x, center_y, fill="darkblue", font="Times 20 bold", text=str(entries[i][j]))
+            center_x = prop.CELL_HEIGHT * (j + 0.5)
+            center_y = prop.CELL_HEIGHT * (i + 0.5)
 
-# direction = { 1 = UP, 2 = RIGHT, 3 = BOTTOM, 4 = LEFT}
-# gap = position [0..3, 0...3]
-def check_move(entries, gap, direction):
+            top_left_x = prop.CELL_WIDTH * j
+            top_left_y = prop.CELL_HEIGHT * i
 
-    tile = [-1,-1]
+            bottom_right_x = top_left_x + prop.CELL_WIDTH
+            bottom_right_y = top_left_y + prop.CELL_HEIGHT
 
-    if(direction == 1 and gap[0] > 0):
-        tile = [gap[0] - 1, gap[1]]
-
-    elif (direction == 2 and gap[1] < 3):
-        tile =  [gap[0], gap[1] + 1]
-
-    elif (direction == 3 and gap[0] < 3):
-       tile = [gap[0] + 1, gap[1]]
-
-    elif (direction == 4 and gap[1] > 0):
-        tile = [gap[0], gap[1] - 1]
-
-    else:
-        # invalid new title since illegal operation
-        return []
-
-    return tile
-
-def get_next_moves(entries, gap):
-    next_moves = []
-
-    for i in range(1,5):
-        next_gap = check_move(entries, gap, i)
-        if(next_gap != []):
-            next_moves.append(i)
-    return next_moves
+            if entries[i][j] != prop.CELL_EMPTY:
+                w.create_rectangle(top_left_x, top_left_y, bottom_right_x, bottom_right_y, fill=prop.CELL_BG_COLOR)
+                w.create_text(center_x, center_y, fill=prop.TEXT_COLOR, font=prop.TEXT_FONT, text=str(entries[i][j]))
 
 
-def swap(entries, pos1, pos2):
-    temp = entries[pos1[0]][pos1[1]]
-    entries[pos1[0]][pos1[1]] = entries[pos2[0]][pos2[1]]
-    entries[pos2[0]][pos2[1]] = temp
+def draw_grid():
+    draw_horizontal_lines()
+    draw_vertical_lines()
 
-def slide(entries, gap, direction):
-    tile = check_move(entries, gap, direction)
 
-    if(len(tile) != 0):
-        swap(entries, gap, tile)
-        return tile
-    else:
-        print("ILLEGAL MOVE DETECTED!")
-        return []
+def draw_vertical_lines():
+    for i in range(0, prop.CELLS_PER_ROW):
+        start_x = i * prop.CELL_WIDTH
+        start_y = 0
+        end_x = start_x
+        end_y = prop.CANVAS_HEIGHT
 
-def create_random_entries(n_shuffles):
-    entries = [[1,2,3,4], [5,6,7,8], [9,10,11,12], [13,14,15,-1]]
-    gap = [3,3]
+        w.create_line(start_x, start_y, end_x, end_y)
 
-    for i in range(0, n_shuffles):
-        next_moves = get_next_moves(entries, gap)
-        next_move = random.choice(next_moves)
-        gap = slide(entries, gap, next_move)
 
-    return entries
+def draw_horizontal_lines():
+    for i in range(0, prop.CELLS_PER_COLUMN):
+        start_x = 0
+        start_y = i * prop.CELL_HEIGHT
+        end_x = prop.CANVAS_WIDTH
+        end_y = start_y
 
-draw_grid()
-draw_entries(create_random_entries(100))
+        w.create_line(start_x, start_y, end_x, end_y)
+
+
+start_node = node.Node.create_random_node(5)
+
+draw(start_node)
+
+solution = solver.dfs_depth_limited(start_node, 5)
+print(solution)
+
+master.resizable(False, False)
 mainloop()

@@ -39,7 +39,8 @@ class Solver(ABC):
 
         while current_node.parent is not None:
             solution.append(current_node.instruction)
-            current_node = current_node.parent
+            next_node = current_node.parent
+            current_node = next_node
 
         solution.reverse()
         return solution

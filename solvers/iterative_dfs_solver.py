@@ -29,7 +29,9 @@ class IterativeDFSSolver(Solver):
 
             self.update_stats()
 
-            if self.is_solution(solution):
+            just_starting = self.depth_limit == 0
+
+            if self.is_solution(solution) or just_starting:
                 return solution
 
             self.depth_limit += 1

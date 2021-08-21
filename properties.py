@@ -12,8 +12,11 @@ CELL_HEIGHT = CANVAS_HEIGHT / CELLS_PER_COLUMN
 
 CELL_EMPTY = -1
 
+AMOUNT_SHUFFLES = 15
+
 # appearence
 
 CELL_BG_COLOR = "#fff"
+CANVAS_BG_COLOR = "lightgrey"
 TEXT_COLOR = "darkblue"
 TEXT_FONT = "Times 20 bold"

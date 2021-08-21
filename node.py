@@ -1,14 +1,7 @@
 import copy
 import random
-from enum import Enum
 import properties as prop
-
-
-class Move(Enum):
-    UP = 1
-    RIGHT = 2
-    BOTTOM = 3
-    LEFT = 4
+from move import Move
 
 
 class Node:
@@ -53,7 +46,7 @@ class Node:
             return True
         elif direction == Move.RIGHT and right_valid:
             return True
-        elif direction == Move.BOTTOM and bottom_valid:
+        elif direction == Move.DOWN and bottom_valid:
             return True
         elif direction == Move.LEFT and left_valid:
             return True
@@ -77,7 +70,7 @@ class Node:
             new_gap = [self.gap[0] - 1, self.gap[1]]
         elif move == Move.RIGHT:
             new_gap = [self.gap[0], self.gap[1] + 1]
-        elif move == Move.BOTTOM:
+        elif move == Move.DOWN:
             new_gap = [self.gap[0] + 1, self.gap[1]]
         elif move == Move.LEFT:
             new_gap = [self.gap[0], self.gap[1] - 1]
@@ -108,11 +101,11 @@ class Node:
         # THROW AN EXCEPTION
 
     @staticmethod
-    def create_random_node(n_shuffles):
+    def create_random_node():
 
         current_node = Node.create_goal_node()
 
-        for i in range(0,n_shuffles):
+        for i in range(0,prop.AMOUNT_SHUFFLES):
             next_nodes = current_node.get_next_nodes()
             current_node = random.choice(next_nodes)
 

@@ -1,4 +1,5 @@
-from game_board import GameBoard
+from game_board_ui import GameBoardUI
 
-gb = GameBoard()
+gb = GameBoardUI()
 gb.draw()
+gb.start_main_loop()

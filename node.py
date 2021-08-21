@@ -1,6 +1,7 @@
 import copy
 import random
-import properties as prop
+
+from properties import Properties as prop
 from move import Move
 
 

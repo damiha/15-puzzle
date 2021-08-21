@@ -1,4 +1,5 @@
 from solvers import DFSSolver
+from statistics import Statistics
 
 
 class DepthLimitedDFSSolver(DFSSolver):
@@ -9,3 +10,6 @@ class DepthLimitedDFSSolver(DFSSolver):
 
     def limit_exceeded(self, depth):
         return depth > self.depth_limit
+
+    def create_stats(self):
+        self.stats = Statistics("depth first search (depth limited)")

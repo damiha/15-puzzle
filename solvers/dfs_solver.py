@@ -1,4 +1,6 @@
 from solvers import Solver
+from statistics import Statistics
+import sys
 
 
 class DFSSolver(Solver):
@@ -8,6 +10,8 @@ class DFSSolver(Solver):
         return self.dfs(self.start_node, 0)
 
     def dfs(self, current_node, depth):
+
+        self.update_stats()
 
         if self.limit_exceeded(depth):
             return []
@@ -28,3 +32,12 @@ class DFSSolver(Solver):
 
     def limit_exceeded(self, depth):
         return False
+
+    def create_stats(self):
+        self.stats = Statistics("depth first search")
+
+    def change_stats(self):
+        self.stats.max_iterations += 1
+        current_space = sys.getsizeof(self.seen)
+
+        self.stats.max_space = max(self.stats.max_space, current_space)

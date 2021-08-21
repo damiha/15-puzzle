@@ -8,6 +8,22 @@ class Solver(ABC):
         self.goal_node = goal_node
 
         self.seen = set()
+        self.stats = None
+
+    @abstractmethod
+    def create_stats(self):
+        pass
+
+    @abstractmethod
+    def change_stats(self):
+        pass
+
+    def update_stats(self):
+        if self.stats is not None:
+            self.change_stats()
+
+    def get_stats(self):
+        return self.stats
 
     @abstractmethod
     def solve(self):

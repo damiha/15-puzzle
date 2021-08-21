@@ -1,5 +1,6 @@
 from tkinter import *
 from solvers import BFSSolver, DFSSolver, DepthLimitedDFSSolver, IterativeDFSSolver
+from statistics import Statistics
 
 import node
 import properties as prop
@@ -62,12 +63,14 @@ def draw_horizontal_lines():
         w.create_line(start_x, start_y, end_x, end_y)
 
 
-start_node = node.Node.create_random_node(5)
+start_node = node.Node.create_random_node(10)
 
 draw(start_node)
 
 solver = IterativeDFSSolver(start_node, goal_node)
+solver.create_stats()
 print(solver.solve())
+solver.get_stats().print()
 
 master.resizable(False, False)
 mainloop()

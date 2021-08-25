@@ -1,5 +1,4 @@
 import copy
-import random
 
 from properties import Properties as prop
 from move import Move
@@ -13,7 +12,7 @@ class Node:
     # which instruction was applied to parent to reach this state
     instruction = None
 
-    def __init__(self, entries,gap, parent):
+    def __init__(self, entries, gap, parent):
         self.entries = entries
         self.parent = parent
         self.gap = gap
@@ -57,10 +56,11 @@ class Node:
     def get_node_after_move(self, move):
         copied_node = self.copy()
         self.apply_move_to_node(copied_node, move)
+        copied_node.parent = self
         return copied_node
 
     def copy(self):
-        return Node(copy.deepcopy(self.entries), copy.deepcopy(self.gap), self)
+        return Node(copy.deepcopy(self.entries), copy.deepcopy(self.gap), copy.deepcopy(self.parent))
 
     def apply_move_to_node(self, node, move):
 
@@ -86,71 +86,9 @@ class Node:
         self.entries[pos1[0]][pos1[1]] = self.entries[pos2[0]][pos2[1]]
         self.entries[pos2[0]][pos2[1]] = temp
 
-    @staticmethod
-    def create_node_from_entries(entries):
-
-        gap = Node.find_gap(entries)
-        return Node(entries, gap, None)
-
-    @staticmethod
-    def find_gap(entries):
-
+    def print(self):
         for i in range(0, prop.CELLS_PER_COLUMN):
             for j in range(0, prop.CELLS_PER_ROW):
-                if entries[i][j] == prop.CELL_EMPTY:
-                    return [i, j]
-        # THROW AN EXCEPTION
-
-    @staticmethod
-    def create_random_node():
-
-        goal_node = Node.create_goal_node()
-        current_node = Node.create_goal_node()
-
-        for i in range(0,prop.AMOUNT_SHUFFLES):
-            next_nodes = current_node.get_next_nodes()
-            current_node = random.choice(next_nodes)
-
-        # cut parent relation so that get_solution() works
-        current_node.parent = None
-
-        if current_node != goal_node:
-            return current_node
-        else:
-            return Node.create_random_node()
-
-    @staticmethod
-    def create_goal_node():
-
-        goal_entries = []
-
-        for i in range(0, prop.CELLS_PER_COLUMN):
-
-            row_entries = []
-
-            for j in range(0, prop.CELLS_PER_ROW):
-                cells_in_previous_rows = prop.CELLS_PER_ROW * i
-                cell_in_current_row = j + 1
-                cell_number = cells_in_previous_rows + cell_in_current_row
-                row_entries.append(cell_number)
-
-            goal_entries.append(row_entries)
-
-        gap_row_index = prop.CELLS_PER_ROW - 1
-        gap_col_index = prop.CELLS_PER_COLUMN - 1
-
-        goal_entries[gap_col_index][gap_row_index] = prop.CELL_EMPTY
-        return Node.create_node_from_entries(goal_entries)
-
-    @staticmethod
-    def empty_node():
-        return Node(None, None, None)
-
-    @staticmethod
-    def print(node):
-
-        for i in range(0, prop.CELLS_PER_COLUMN):
-            for j in range(0, prop.CELLS_PER_ROW):
-                print(str(node.entries[i][j]) + "\t", end = "")
+                print(str(self.entries[i][j]) + "\t", end = "")
             print("")
         print("")

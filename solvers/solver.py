@@ -1,13 +1,14 @@
 from abc import ABC, abstractmethod
 from node import Node
+from node_factory import NodeFactory
 
 class Solver(ABC):
 
     def __init__(self):
         self.seen = set()
 
-        self.start_node = Node.empty_node()
-        self.goal_node = Node.empty_node()
+        self.start_node = NodeFactory.empty_node()
+        self.goal_node = NodeFactory.empty_node()
         self.stats = None
 
     # TODO: prevent NullPointerException

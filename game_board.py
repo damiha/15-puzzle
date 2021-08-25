@@ -2,6 +2,7 @@ from solvers import BFSSolver, DFSSolver, DepthLimitedDFSSolver, IterativeDFSSol
 from statistics import Statistics
 
 from node import Node
+from node_factory import NodeFactory
 from move import Move
 from properties import Properties as prop
 
@@ -13,8 +14,8 @@ class GameBoard:
         self.move_pointer = -1
         self.shuffled_without_solution = False
 
-        self.current_node = Node.create_goal_node()
-        self.goal_node = Node.create_goal_node()
+        self.current_node = NodeFactory.create_goal_node()
+        self.goal_node = NodeFactory.create_goal_node()
 
         self.set_solver(prop.DEFAULT_SOLVER)
 
@@ -28,7 +29,7 @@ class GameBoard:
         self.solver = solvers_by_name[solver_name]
 
     def shuffle_game_board(self):
-        self.current_node = Node.create_random_node()
+        self.current_node = NodeFactory.create_random_node()
         self.shuffled_without_solution = True
 
     def solve(self):

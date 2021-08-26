@@ -1,6 +1,7 @@
-from solvers import Solver
-from statistics import Statistics
 import sys
+
+from solvers import Solver
+from model.statistics import Statistics
 
 
 class BFSSolver(Solver):

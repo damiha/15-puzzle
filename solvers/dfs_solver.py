@@ -1,5 +1,5 @@
 from solvers import Solver
-from statistics import Statistics
+from model.statistics import Statistics
 import sys
 
 

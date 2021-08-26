@@ -1,6 +1,5 @@
 import unittest
-from node_factory import NodeFactory
-from node import Node
+from model.node_factory import NodeFactory
 from properties import Properties as prop
 
 

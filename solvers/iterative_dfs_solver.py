@@ -1,6 +1,5 @@
 from solvers import Solver, DepthLimitedDFSSolver
-from statistics import Statistics
-import sys
+from model.statistics import Statistics
 
 
 class IterativeDFSSolver(Solver):

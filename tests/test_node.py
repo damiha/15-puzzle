@@ -1,6 +1,6 @@
 import unittest
-from node import Node
-from move import Move
+from model.node import Node
+from model.move import Move
 
 
 class TestNode(unittest.TestCase):
@@ -161,4 +161,4 @@ class TestNode(unittest.TestCase):
         y = 1
         actual_node = Node(test_entries, [y, x], None)
 
-        self.assertEquals(3, len(actual_node.get_next_nodes()))
+        self.assertEqual(3, len(actual_node.get_next_nodes()))

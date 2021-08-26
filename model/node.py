@@ -1,7 +1,7 @@
 import copy
 
-from properties import Properties as prop
-from move import Move
+from properties import Properties
+from model import Move
 
 
 class Node:
@@ -34,8 +34,8 @@ class Node:
 
     def check_move(self, direction):
 
-        row_index_last_cell = prop.CELLS_PER_ROW - 1
-        column_index_last_cell = prop.CELLS_PER_COLUMN - 1
+        row_index_last_cell = Properties.CELLS_PER_ROW - 1
+        column_index_last_cell = Properties.CELLS_PER_COLUMN - 1
 
         up_valid = self.gap[0] > 0
         right_valid = self.gap[1] < row_index_last_cell
@@ -56,11 +56,14 @@ class Node:
     def get_node_after_move(self, move):
         copied_node = self.copy()
         self.apply_move_to_node(copied_node, move)
+
+        # after move, old node is parent of new (copied) one; overwrite copy
         copied_node.parent = self
         return copied_node
 
     def copy(self):
-        return Node(copy.deepcopy(self.entries), copy.deepcopy(self.gap), copy.deepcopy(self.parent))
+        # copied node gets same reference to parent
+        return Node(copy.deepcopy(self.entries), copy.deepcopy(self.gap), self.parent)
 
     def apply_move_to_node(self, node, move):
 
@@ -87,8 +90,8 @@ class Node:
         self.entries[pos2[0]][pos2[1]] = temp
 
     def print(self):
-        for i in range(0, prop.CELLS_PER_COLUMN):
-            for j in range(0, prop.CELLS_PER_ROW):
+        for i in range(0, Properties.CELLS_PER_COLUMN):
+            for j in range(0, Properties.CELLS_PER_ROW):
                 print(str(self.entries[i][j]) + "\t", end = "")
             print("")
         print("")

@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
-from node import Node
-from node_factory import NodeFactory
+
+from model.node_factory import NodeFactory
+
 
 class Solver(ABC):
 

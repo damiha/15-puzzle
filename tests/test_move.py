@@ -1,5 +1,5 @@
 import unittest
-from move import Move
+from model.move import Move
 
 
 class TestMove(unittest.TestCase):

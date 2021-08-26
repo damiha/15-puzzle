@@ -1,11 +1,11 @@
+from properties import Properties
 from solvers import DFSSolver
-from statistics import Statistics
-from properties import Properties as prop
+from model.statistics import Statistics
 
 
 class DepthLimitedDFSSolver(DFSSolver):
 
-    def __init__(self, depth_limit=prop.DEFAULT_DEPTH_LIMIT):
+    def __init__(self, depth_limit=Properties.DEFAULT_DEPTH_LIMIT):
         super().__init__()
         self.depth_limit = depth_limit
 

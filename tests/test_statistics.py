@@ -1,5 +1,5 @@
 import unittest
-from statistics import Statistics
+from model.statistics import Statistics
 
 
 class TestStatistics(unittest.TestCase):

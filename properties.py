@@ -12,7 +12,7 @@ class Properties:
 
     CELL_EMPTY = -1
 
-    AMOUNT_SHUFFLES = 15
+    AMOUNT_SHUFFLES = 20
 
     CELL_BG_COLOR = "#fff"
     CANVAS_BG_COLOR = "lightgrey"
@@ -27,4 +27,4 @@ class Properties:
     ]
 
     DEFAULT_SOLVER = "breadth first search"
-    DEFAULT_DEPTH_LIMIT = 10
+    DEFAULT_DEPTH_LIMIT = AMOUNT_SHUFFLES

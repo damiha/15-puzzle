@@ -61,6 +61,7 @@ class GameBoardUI:
     def read_and_set_solver(self):
         solver_name = self.clicked.get()
         self.gameboard.set_solver(solver_name)
+        self.solve_btn.config(state="disabled")
 
     def start_main_loop(self):
         self.root.mainloop()
